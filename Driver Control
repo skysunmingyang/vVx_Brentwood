@@ -15,5 +15,28 @@ when(STARTED){
         LeftArm.stop();
       }
     }
+    while(true){
+    FrontLeftWheel.setVelocity(50,percent);
+    FrontRightWheel.setVelocity(50,percent);
+    RearLeftWheel.setVelocity(50,percent);
+    RearRightWheel.setVelocity(50,percent);
+    if(Controller1.ButtonUp.pressing()){
+      FrontLeftWheel.spin(forward);
+      FrontRightWheel.spin(forward);
+      RearLeftWheel.spin(forward);
+      RearRightWheel.spin(forward);
+    }else{
+      if(Controller1.ButtonDown.pressing()){     
+        FrontLeftWheel.spin(reverse);
+        FrontRightWheel.spin(reverse);
+        RearLeftWheel.spin(reverse);
+        RearRightWheel.spin(reverse);
+      }else{
+        FrontLeftWheel.stop();
+        FrontRightWheel.stop();
+        RearLeftWheel.stop();
+        RearRightWheel.stop();
+      }
+    }
   }
 }
