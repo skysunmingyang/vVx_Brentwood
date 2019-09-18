@@ -1,18 +1,66 @@
-//Vex basics: Driver Control
-when(STARTED){
-  while(true){
-    LeftArm.setVelocity(50,percent);
-    RightArm.setVelocity(50,percent);
-    if(Controller1.ButtonUp.pressing()){
-      LeftArm.spin(forward);
-      RightArm.spin(forward);
-    }else{
-      if(Controller1.ButtonDown.pressing()){
-        LeftArm.spin(reverse);
-        RightArm.spin(reverse);
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       mahirarora                                                */
+/*    Created:      Wed Sep 18 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+#include "vex.h"
+
+using namespace vex;
+
+// A global instance of vex::brain used for printing to the V5 brain screen
+vex::brain       Brain;
+vex::controller Controller1;
+vex::motor FrontLeftWheel   = vex::motor( vex::PORT19 );
+vex::motor FrontRightWheel  = vex::motor( vex::PORT9, true );
+vex::motor RearLeftWheel   = vex::motor( vex::PORT20 );
+vex::motor RearRightWheel  = vex::motor( vex::PORT10, true );
+vex::motor LeftArm = vex::motor( vex::PORT18);
+vex::motor RightArm = vex::motor( vex::PORT8, true);
+// define your global instances of motors and other devices here
+
+
+int main() {
+    while(true){
+      LeftArm.setVelocity(80, vex::velocityUnits::pct);
+      RightArm.setVelocity(80, vex::velocityUnits::pct);
+      if(Controller1.ButtonR1.pressing()){
+        LeftArm.spin( vex::directionType::fwd);
+        RightArm.spin( vex::directionType::fwd);
       }else{
-        RightArm.stop();
-        LeftArm.stop();
+        if(Controller1.ButtonR2.pressing()){
+          LeftArm.spin( vex::directionType::rev);
+          RightArm.spin( vex::directionType::rev);
+        }else{
+          RightArm.stop();
+          LeftArm.stop();
+        }
+      }
+      while(true){
+          FrontRightWheel.setVelocity(80, vex::velocityUnits::pct);
+          FrontLeftWheel.setVelocity(80, vex::velocityUnits::pct);
+          RearRightWheel.setVelocity(80, vex::velocityUnits::pct);
+          RearLeftWheel.setVelocity(80, vex::velocityUnits::pct);
+      if(Controller1.ButtonUp.pressing()){
+        RearRightWheel.spin( vex::directionType::fwd );
+        RearLeftWheel.spin( vex::directionType::fwd );
+        FrontLeftWheel.spin( vex::directionType::fwd);
+        FrontRightWheel.spin( vex::directionType::fwd);
+
+      }else{
+        if(Controller1.ButtonDown.pressing()){     
+        RearRightWheel.spin( vex::directionType::rev );
+        RearLeftWheel.spin( vex::directionType::rev );
+        FrontLeftWheel.spin( vex::directionType::rev);
+        FrontRightWheel.spin( vex::directionType::rev);
+        }else{
+          FrontLeftWheel.stop();
+          FrontRightWheel.stop();
+          RearLeftWheel.stop();
+          RearRightWheel.stop();
+        }
       }
     }
   }
