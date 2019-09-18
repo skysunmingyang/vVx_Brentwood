@@ -1,0 +1,19 @@
+//Vex basics: Driver Control
+when(STARTED){
+  while(true){
+    LeftArm.setVelocity(50,percent);
+    RightArm.setVelocity(50,percent);
+    if(Controller1.ButtonUp.pressing()){
+      LeftArm.spin(forward);
+      RightArm.spin(forward);
+    }else{
+      if(Controller1.ButtonDown.pressing()){
+        LeftArm.spin(reverse);
+        RightArm.spin(reverse);
+      }else{
+        RightArm.stop();
+        LeftArm.stop();
+      }
+    }
+  }
+}
