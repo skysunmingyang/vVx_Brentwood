@@ -13,55 +13,37 @@ using namespace vex;
 // A global instance of vex::brain used for printing to the V5 brain screen
 vex::brain       Brain;
 vex::controller Controller1;
-vex::motor FrontLeftWheel   = vex::motor( vex::PORT19 );
-vex::motor FrontRightWheel  = vex::motor( vex::PORT9, true );
-vex::motor RearLeftWheel   = vex::motor( vex::PORT20 );
-vex::motor RearRightWheel  = vex::motor( vex::PORT10, true );
-vex::motor LeftArm = vex::motor( vex::PORT18);
-vex::motor RightArm = vex::motor( vex::PORT8, true);
+vex::motor FrontLeftWheel   = vex::motor( vex::PORT13);
+vex::motor FrontRightWheel  = vex::motor( vex::PORT10, true);
+vex::motor RearLeftWheel   = vex::motor( vex::PORT14);
+vex::motor RearRightWheel  = vex::motor( vex::PORT9, true);
+vex::motor LeftArm = vex::motor( vex::PORT11);
+vex::motor RightArm = vex::motor( vex::PORT12, true);
+
+int armSpeed = 150;
 // define your global instances of motors and other devices here
 
 
-int main() {
-    while(true){
-      LeftArm.setVelocity(80, vex::velocityUnits::pct);
-      RightArm.setVelocity(80, vex::velocityUnits::pct);
-      if(Controller1.ButtonR1.pressing()){
-        LeftArm.spin( vex::directionType::fwd);
-        RightArm.spin( vex::directionType::fwd);
-      }else{
-        if(Controller1.ButtonR2.pressing()){
-          LeftArm.spin( vex::directionType::rev);
-          RightArm.spin( vex::directionType::rev);
-        }else{
-          RightArm.stop();
-          LeftArm.stop();
+int main() {   
+       while(true){
+       if(Controller1.ButtonUp.pressing()) { 
+          LeftArm.spin(vex::directionType::fwd, armSpeed, vex::velocityUnits::pct);
+          RightArm.spin(vex::directionType::fwd, armSpeed, vex::velocityUnits::pct);
+         }
+        else if(Controller1.ButtonDown.pressing())
+        {
+          LeftArm.spin(vex::directionType::rev, armSpeed, vex::velocityUnits::pct);
+          RightArm.spin(vex::directionType::rev, armSpeed, vex::velocityUnits::pct);
         }
-      }
-      while(true){
-          FrontRightWheel.setVelocity(80, vex::velocityUnits::pct);
-          FrontLeftWheel.setVelocity(80, vex::velocityUnits::pct);
-          RearRightWheel.setVelocity(80, vex::velocityUnits::pct);
-          RearLeftWheel.setVelocity(80, vex::velocityUnits::pct);
-      if(Controller1.ButtonUp.pressing()){
-        RearRightWheel.spin( vex::directionType::fwd );
-        RearLeftWheel.spin( vex::directionType::fwd );
-        FrontLeftWheel.spin( vex::directionType::fwd);
-        FrontRightWheel.spin( vex::directionType::fwd);
-
-      }else{
-        if(Controller1.ButtonDown.pressing()){     
-        RearRightWheel.spin( vex::directionType::rev );
-        RearLeftWheel.spin( vex::directionType::rev );
-        FrontLeftWheel.spin( vex::directionType::rev);
-        FrontRightWheel.spin( vex::directionType::rev);
-        }else{
-          FrontLeftWheel.stop();
-          FrontRightWheel.stop();
-          RearLeftWheel.stop();
-          RearRightWheel.stop();
-        }
+        else
+          {
+            RightArm.stop();
+            LeftArm.stop();
+          }
+      RearLeftWheel.spin(directionType::fwd,Controller1.Axis3.value()-Controller1.Axis4.value()+Controller1.Axis1.value() , velocityUnits::pct);
+      FrontLeftWheel.spin(directionType::fwd,Controller1.Axis3.value()+Controller1.Axis4.value()+Controller1.Axis1.value() , velocityUnits::pct);
+      RearRightWheel.spin(directionType::rev,Controller1.Axis3.value()+Controller1.Axis4.value()-Controller1.Axis1.value() , velocityUnits::pct);    
+      FrontRightWheel.spin(directionType::rev,Controller1.Axis3.value()-Controller1.Axis4.value()-Controller1.Axis1.value() , velocityUnits::pct);
+      
       }
     }
-  }
-}
