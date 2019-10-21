@@ -5,7 +5,7 @@ using namespace vex;
 // A global instance of vex::brain used for printing to the V5 brain screen
 vex::brain       Brain;
 vex::controller Controller1;
-vex::controller Controller2;
+vex::controller Controller3;
 vex::motor FrontLeftWheel   = vex::motor( vex::PORT13);
 vex::motor FrontRightWheel  = vex::motor( vex::PORT10, true);
 vex::motor RearLeftWheel   = vex::motor( vex::PORT14);
@@ -21,12 +21,12 @@ int armSpeed = 150;
 int main() {   
        while(true)
        {
-         if(Controller1.ButtonUp.pressing())
+         if(Controller1.ButtonR1.pressing())
          { 
           LeftArm.spin(vex::directionType::fwd, armSpeed, vex::velocityUnits::pct);
           RightArm.spin(vex::directionType::fwd, armSpeed, vex::velocityUnits::pct);
          }
-         else if(Controller1.ButtonDown.pressing())
+         else if(Controller1.ButtonR2.pressing())
          {
           LeftArm.spin(vex::directionType::rev, armSpeed, vex::velocityUnits::pct);
           RightArm.spin(vex::directionType::rev, armSpeed, vex::velocityUnits::pct);
@@ -40,14 +40,15 @@ int main() {
         FrontLeftWheel.spin(directionType::rev,Controller1.Axis3.value()+Controller1.Axis4.value()+Controller1.Axis1.value() , velocityUnits::pct);
         RearRightWheel.spin(directionType::fwd,Controller1.Axis3.value()+Controller1.Axis4.value()-Controller1.Axis1.value() , velocityUnits::pct);    
         FrontRightWheel.spin(directionType::rev,Controller1.Axis3.value()-Controller1.Axis4.value()-Controller1.Axis1.value() , velocityUnits::pct);
-        if(Controller2.ButtonUp.pressing())
+     // CenterArm.setVelocity(80, vex::velocityUnits::pct);
+      if(Controller3.ButtonL2.pressing())
         {
         CenterArm.spin( vex::directionType::fwd);
         }else
             {
-             if(Controller2.ButtonDown.pressing())
+             if(Controller3.ButtonL1.pressing())
              {
-             CenterArm.spin( vex::directionType::rev);
+                  CenterArm.spin( vex::directionType::rev);
              }else{
              CenterArm.stop();
              }
